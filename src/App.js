@@ -1,25 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import searchImages from './api';
+import SearchBar from './components/SearchBar';
+import ImageList from './components/ImageList';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [images,setImages] = useState([])
+
+    const handleImageSearch = async (searchTerm)=>{
+      const images = await searchImages(searchTerm)
+      setImages(images)
+    } 
+
+    return (
+      <div className="App">
+        <SearchBar handleImageSearch={handleImageSearch}/>
+        <ImageList images={images}/>
+      </div>
+    );
 }
 
 export default App;
